@@ -1,0 +1,18 @@
+# SuiteClose
+
+> NetSuite data engineering for UK finance teams.
+> We build the clean data layer underneath NetSuite AI so your financial outputs are accurate.
+
+## What we do
+- Fix broken NetSuite data layers so AI tools give accurate answers
+- Build automated reporting replacing Excel with live P&L and balance sheet
+- dbt transformation logic, semantic layer, and clean financial data on retainer
+
+## Who we help
+CFOs, Finance Directors, and Financial Controllers at UK SMEs (50-200 employees) running NetSuite
+
+## Key pages
+- https://suiteclose.co.uk
+
+## Contact
+- https://suiteclose.co.uk/#contact-section
