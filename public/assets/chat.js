@@ -1,4 +1,4 @@
-// SuiteClose website assistant widget. Talks to /api/chat (netlify/functions/chat.mjs).
+// SuiteClose website assistant widget. Talks to /api/chat (server/chat.mjs, served by server.mjs).
 (function () {
   const ENDPOINT = "/api/chat";
   const GREETING =

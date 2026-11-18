@@ -15,3 +15,7 @@ desktop.ini
 
 # Node (if you ever add tooling)
 node_modules/
+
+# Secrets
+.env
+.env.*

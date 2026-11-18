@@ -1,7 +1,0 @@
-# Static site served from the repo root, plus the website assistant function.
-[build]
-  publish = "."
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"

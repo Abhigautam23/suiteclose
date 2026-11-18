@@ -1,9 +1,9 @@
-// SuiteClose website assistant — Netlify Function at /api/chat.
+// SuiteClose website assistant — handler for POST /api/chat (mounted by server.mjs).
 //
-// The browser sends the visible chat history (text only). This function runs a
+// The browser sends the visible chat history (text only). This handler runs a
 // short tool-use loop with Claude and returns the assistant's reply.
 //
-// Environment variables (Netlify → Site configuration → Environment variables):
+// Environment variables (Railway → service → Variables):
 //   ANTHROPIC_API_KEY      required
 //   CHAT_MODEL             optional, defaults to claude-opus-5-5
 //   HANDOFF_ENDPOINT       optional, Formspree (or similar) URL that emails you hand-offs
@@ -18,7 +18,20 @@ const DEFAULT_ORIGINS = [SITE, "https://www.suiteclose.co.uk"];
 const MAX_TURNS = 20; // messages kept from the browser history
 const MAX_CHARS = 2000; // per message
 
-const env = (k) => (typeof Netlify !== "undefined" ? Netlify.env.get(k) : process.env[k]);
+const env = (k) => process.env[k];
+
+// Simple in-memory rate limit per visitor IP (the server is long-lived on Railway).
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const RATE_MAX = Number(process.env.CHAT_RATE_LIMIT || 30); // messages per IP per window
+const hits = new Map();
+function rateLimited(ip) {
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5000) for (const [k, v] of hits) if (now - v[v.length - 1] > RATE_WINDOW_MS) hits.delete(k);
+  return recent.length > RATE_MAX;
+}
 
 // ---------------------------------------------------------------------------
 // Facts the assistant may state. Keep these in sync with index.html.
@@ -171,15 +184,15 @@ const json = (body, status, origin) =>
     },
   });
 
-export default async (req) => {
+export default async function handleChat(req, { ip = "unknown" } = {}) {
   const allowed = (env("ALLOWED_ORIGINS") || DEFAULT_ORIGINS.join(",")).split(",").map((s) => s.trim());
   const origin = req.headers.get("origin");
   let sameHost = false;
   try {
     sameHost = Boolean(origin) && new URL(origin).host === (req.headers.get("host") || new URL(req.url).host);
   } catch {}
-  // Allow the production domains and whatever host is serving this function
-  // (covers Netlify deploy previews, which send an Origin even for same-site requests).
+  // Allow the production domains and whatever host is serving this app
+  // (covers the *.up.railway.app address and PR environments, which send an Origin even for same-site requests).
   const okOrigin = origin && (allowed.includes(origin) || sameHost) ? origin : null;
 
   if (req.method === "OPTIONS") {
@@ -193,6 +206,8 @@ export default async (req) => {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
   // Requests from other websites are refused.
   if (origin && !okOrigin) return json({ error: "Forbidden" }, 403);
+
+  if (rateLimited(ip)) return json({ error: "You've sent a lot of messages. Please wait a few minutes, or use the contact form." }, 429, okOrigin);
 
   let body;
   try {
@@ -240,6 +255,4 @@ export default async (req) => {
     console.error("chat function error", err);
     return json({ error: "Something went wrong. Please use the contact form." }, 500, okOrigin);
   }
-};
-
-export const config = { path: "/api/chat" };
+}
