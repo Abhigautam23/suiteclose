@@ -1,0 +1,9 @@
+{
+  "name": "suiteclose-site",
+  "private": true,
+  "type": "module",
+  "description": "SuiteClose static site + Netlify Function for the website assistant",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0"
+  }
+}
