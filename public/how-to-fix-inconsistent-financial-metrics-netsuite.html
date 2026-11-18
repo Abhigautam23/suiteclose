@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>How to fix inconsistent financial metrics in NetSuite | SuiteClose</title>
+<meta name="description" content="Inconsistent financial metrics in NetSuite come from a broken data layer, not the reports on top. Here's the engineering approach UK finance teams use to get to one version of the truth.">
+<link rel="canonical" href="https://suiteclose.co.uk/how-to-fix-inconsistent-financial-metrics-netsuite.html">
+<link rel="stylesheet" href="article.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/chat.css">
+<script src="/assets/chat.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/">suite<span>close</span></a></div>
+  <a class="back-link" href="/">← Back to home</a>
+</nav>
+
+<article>
+  <div class="eyebrow">NetSuite data engineering</div>
+  <h1>How to fix inconsistent financial metrics in NetSuite</h1>
+  <p class="lede">If your metrics change depending on which report you pull or which tool you ask, the fix isn't in NetSuite — it's in the layer underneath it.</p>
+
+  <h2>Start with the data layer, not the dashboard</h2>
+  <p>It is tempting to fix inconsistent metrics by rebuilding the dashboard. But if the dashboard reads the same ambiguous data, the problem comes back. Start one level down: extract NetSuite data reliably on a schedule (Fivetran, SuiteQL or a similar connector), land it unchanged, and do all the transformation in one version-controlled place, such as dbt.</p>
+
+  <h2>Define each metric once, use everywhere</h2>
+  <p>Write each metric — gross margin, EBITDA, DSO, recognised revenue — as code, with its accounts, filters and currency rules explicit. Store the definitions alongside a plain-English description finance signs off. Reports, spreadsheets and AI tools then read the finished metric rather than recomputing it. If the definition changes, it changes everywhere at once, with a record of who changed it and why.</p>
+
+  <h2>Automate reconciliation instead of doing it in Excel</h2>
+  <p>Automated tests replace the month-end spreadsheet checks. Typical examples: the trial balance nets to zero; the modelled TB ties to NetSuite's TB for every period and subsidiary; every GL account is mapped to a reporting line; no posting lands in a closed period after close. Tests run on every refresh, so a break is spotted the day it happens rather than on day five of close.</p>
+
+  <h2>What ongoing data engineering looks like</h2>
+  <p>NetSuite keeps changing: new accounts, subsidiaries, custom fields and workflows. Ongoing work is mostly keeping the model in step — mapping new accounts, adding schedules finance asks for, and investigating any test that fails. Done well, it is a few hours a month, and most of it happens before anyone notices a number was about to be wrong.</p>
+
+  <div class="cta-box">
+    <h3>Ready to get to one version of the truth?</h3>
+    <p>Start with the free AI Readiness Audit — it scores your data layer in about 3 minutes.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-logo">suite<span>close</span>.co.uk</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a></div>
+</footer>
+
+</body>
+</html>

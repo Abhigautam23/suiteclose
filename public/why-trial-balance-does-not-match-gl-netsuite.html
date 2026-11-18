@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Why your trial balance doesn't match the GL in NetSuite | SuiteClose</title>
+<meta name="description" content="When your NetSuite trial balance and general ledger disagree, it's usually a data layer issue. Here are the most common causes and how UK finance teams resolve them.">
+<link rel="canonical" href="https://suiteclose.co.uk/why-trial-balance-does-not-match-gl-netsuite.html">
+<link rel="stylesheet" href="article.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/chat.css">
+<script src="/assets/chat.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/">suite<span>close</span></a></div>
+  <a class="back-link" href="/">← Back to home</a>
+</nav>
+
+<article>
+  <div class="eyebrow">NetSuite data engineering</div>
+  <h1>Why your trial balance doesn't match the GL in NetSuite</h1>
+  <p class="lede">A trial balance that doesn't tie to the GL is one of the most stressful month-end discoveries — and one of the most common NetSuite data layer failures.</p>
+
+  <h2>Common causes of TB / GL drift</h2>
+  <p>NetSuite's own trial balance and general ledger come from the same posting lines, so a genuine mismatch between them is rare. What usually doesn't match is a <em>copy</em> of one of them — a saved search, an export or a warehouse table — compared with the other. The common causes:</p>
+  <ul>
+  <li>Different subsidiary or consolidation context between the two.</li>
+  <li>Date range vs accounting period filters.</li>
+  <li>Non-posting or unapproved journals included in the search.</li>
+  <li>Foreign-currency amounts compared with base-currency amounts.</li>
+  <li>Different accounting books, if you use multi-book accounting.</li>
+  <li>A stale extract that misses postings made after it was taken.</li>
+  </ul>
+
+  <h2>Intercompany and elimination errors</h2>
+  <p>Intercompany balances should net to zero on consolidation. When they don't — because one side posted in a different period, at a different rate, or to an unmapped account — the elimination leaves a residual. The consolidated TB still balances, but individual accounts look wrong, and anyone rebuilding the TB from raw lines without the elimination entries will get a different answer.</p>
+
+  <h2>Closed-period manual journals</h2>
+  <p>NetSuite lets users with the right permission post into a locked or closed period, or reopen a period to correct it. Each time that happens, the TB for a period you already reported changes. If nobody is told, the board pack, last month's exports and any AI tool trained on old data quietly disagree with NetSuite from then on.</p>
+
+  <h2>Automated TB rebuild and validation</h2>
+  <p>The reliable approach is to rebuild the TB from posted GL lines in a modelled data layer, then test it against NetSuite's own TB for every period and subsidiary on every refresh. Add a check that flags any posting dated in a closed period after close. Differences become alerts with the exact account and period, not a month-end investigation.</p>
+
+  <div class="cta-box">
+    <h3>TB not tying to GL at month-end?</h3>
+    <p>The free AI Readiness Audit surfaces the usual suspects before they become a crisis.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-logo">suite<span>close</span>.co.uk</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a></div>
+</footer>
+
+</body>
+</html>

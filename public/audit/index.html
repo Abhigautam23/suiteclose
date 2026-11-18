@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetSuite AI Readiness Audit | SuiteClose</title>
+<link rel="canonical" href="https://suiteclose.co.uk/audit/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:url" content="https://suiteclose.co.uk/audit/">
+<meta name="description" content="Free self-assessment tool: discover how ready your NetSuite data is for AI-powered analytics, chat interfaces, and automated reporting.">
+<meta property="og:title" content="NetSuite AI Readiness Audit — Free Tool">
+<meta property="og:description" content="Is your NetSuite data actually ready for AI? Score your setup across 5 dimensions in about 3 minutes.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://suiteclose.co.uk/audit/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://suiteclose.co.uk/audit/og-image.png">
+<meta name="twitter:title" content="NetSuite AI Readiness Audit — Free Tool">
+<meta name="twitter:description" content="Is your NetSuite data actually ready for AI? Score your setup across 5 dimensions in about 3 minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e17;
+  --surface:#111827;
+  --surface-2:#1a2236;
+  --surface-3:#222d44;
+  --border:#2a3654;
+  --border-accent:#3b82f620;
+  --text:#e2e8f0;
+  --text-muted:#8899b4;
+  --text-dim:#5a6a84;
+  --accent:#3b82f6;
+  --accent-glow:#3b82f640;
+  --accent-2:#06b6d4;
+  --green:#10b981;
+  --green-bg:#10b98115;
+  --yellow:#f59e0b;
+  --yellow-bg:#f59e0b15;
+  --red:#ef4444;
+  --red-bg:#ef444415;
+  --orange:#f97316;
+  --orange-bg:#f9731615;
+  --radius:12px;
+  --radius-sm:8px;
+  --font-display:'DM Serif Display',serif;
+  --font-body:'Plus Jakarta Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.5;
+}
+.glow-orb{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(120px);
+}
+.glow-orb-1{top:-10%;left:-5%;width:500px;height:500px;background:radial-gradient(circle,#3b82f612,transparent 70%)}
+.glow-orb-2{bottom:-15%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,#06b6d40d,transparent 70%)}
+
+.container{max-width:760px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+.hero{padding:64px 0 48px;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--accent-glow);border:1px solid var(--accent);
+  padding:6px 14px;border-radius:100px;
+  font-size:12px;font-weight:600;letter-spacing:0.5px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:24px;
+}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{
+  font-family:var(--font-display);font-size:clamp(32px,5vw,48px);
+  font-weight:400;line-height:1.15;margin-bottom:16px;
+  background:linear-gradient(135deg,#e2e8f0 30%,#3b82f6 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{font-size:17px;color:var(--text-muted);max-width:540px;margin:0 auto;line-height:1.7}
+
+.progress-track{
+  position:sticky;top:0;z-index:100;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  padding:16px 0;backdrop-filter:blur(12px);
+  transition:opacity 0.3s;
+}
+.progress-track[data-hidden="true"]{opacity:0;pointer-events:none}
+.progress-inner{max-width:760px;margin:0 auto;padding:0 24px}
+.progress-label{display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:8px;font-weight:500}
+.progress-bar{height:4px;background:var(--surface-2);border-radius:100px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:100px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);width:0%}
+
+.audit-section{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:32px;margin-bottom:20px;
+  transition:all 0.3s;
+}
+.audit-section:hover{border-color:var(--border-accent)}
+.audit-section.completed{opacity:0.65}
+.audit-section.completed:hover{opacity:1}
+.section-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:24px}
+.section-icon{
+  width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+  background:var(--surface-2);border:1px solid var(--border);
+}
+.section-title{font-family:var(--font-display);font-size:22px;margin-bottom:4px}
+.section-desc{font-size:14px;color:var(--text-muted)}
+.section-count{font-family:var(--font-mono);font-size:12px;color:var(--text-dim);margin-top:4px}
+
+.question{padding:16px 0;border-bottom:1px solid var(--border)}
+.question:last-child{border-bottom:none}
+.q-text{font-size:15px;font-weight:500;margin-bottom:12px;line-height:1.5}
+.q-help{font-size:13px;color:var(--text-dim);margin-bottom:12px;font-style:italic}
+.options{display:flex;flex-wrap:wrap;gap:8px}
+.opt-btn{
+  display:inline-flex;align-items:center;
+  padding:8px 16px;border-radius:100px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--text-muted);
+  font-size:13px;font-weight:500;cursor:pointer;
+  font-family:var(--font-body);
+  transition:all 0.2s;
+}
+.opt-btn:hover{border-color:var(--accent);color:var(--text)}
+.opt-btn.selected::before,
+.opt-btn.selected-partial::before,
+.opt-btn.selected-no::before{
+  content:'✓ ';
+  font-weight:700;
+}
+.opt-btn.selected{
+  background:var(--accent);border-color:var(--accent);
+  color:#fff;box-shadow:0 0 20px var(--accent-glow);
+}
+.opt-btn.selected-partial{
+  background:var(--yellow);border-color:var(--yellow);color:#000;
+}
+.opt-btn.selected-no{
+  background:#1e293b;border-color:#ef4444;border-width:2px;
+  color:#f87171;
+}
+
+.results-container{
+  display:none;padding:48px 0 80px;
+  animation:fadeUp 0.6s ease-out;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.results-container.visible{display:block}
+
+.score-card{
+  text-align:center;padding:48px 32px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);margin-bottom:24px;
+  position:relative;overflow:hidden;
+}
+.score-card::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:300px;height:200px;
+  background:radial-gradient(ellipse,var(--accent-glow),transparent 70%);
+  pointer-events:none;
+}
+.score-ring{position:relative;width:180px;height:180px;margin:0 auto 24px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring .track{fill:none;stroke:var(--surface-3);stroke-width:8}
+.score-ring .fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)}
+.score-number{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--font-display);font-size:52px;
+}
+.score-number span{font-size:24px;color:var(--text-muted)}
+.score-label{font-size:20px;font-weight:600;margin-bottom:8px}
+.score-subtitle{font-size:15px;color:var(--text-muted);max-width:440px;margin:0 auto}
+
+.breakdown{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:32px;margin-bottom:24px;
+}
+.breakdown h3{font-family:var(--font-display);font-size:20px;margin-bottom:20px}
+.breakdown-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--border);
+}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-row .label{font-size:14px;font-weight:500}
+.breakdown-row .bar-wrap{width:45%;display:flex;align-items:center;gap:12px}
+.breakdown-row .bar-bg{flex:1;height:6px;background:var(--surface-3);border-radius:100px;overflow:hidden}
+.breakdown-row .bar-fg{height:100%;border-radius:100px;transition:width 1s ease-out}
+.breakdown-row .pct{font-family:var(--font-mono);font-size:13px;width:36px;text-align:right}
+
+.findings{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:32px;margin-bottom:24px;
+}
+.findings h3{font-family:var(--font-display);font-size:20px;margin-bottom:20px}
+.finding-item{padding:14px 0;border-bottom:1px solid var(--border)}
+.finding-item:last-child{border-bottom:none}
+.finding-item .severity{
+  display:inline-block;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.8px;
+  padding:3px 8px;border-radius:4px;margin-bottom:6px;
+}
+.severity.critical{background:var(--red-bg);color:var(--red)}
+.severity.warning{background:var(--yellow-bg);color:var(--yellow)}
+.severity.good{background:var(--green-bg);color:var(--green)}
+.severity.info{background:var(--orange-bg);color:var(--orange)}
+.finding-item p{font-size:14px;color:var(--text-muted);line-height:1.6}
+
+.cta-box{
+  text-align:center;padding:40px 32px;
+  background:linear-gradient(135deg,var(--surface),var(--surface-2));
+  border:1px solid var(--accent);border-radius:var(--radius);
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--accent-glow),transparent 60%);
+  pointer-events:none;
+}
+.cta-box h3{font-family:var(--font-display);font-size:24px;margin-bottom:12px;position:relative}
+.cta-box p{font-size:15px;color:var(--text-muted);margin-bottom:24px;position:relative}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 32px;border-radius:100px;border:none;
+  background:var(--accent);color:#fff;
+  font-size:15px;font-weight:600;cursor:pointer;
+  font-family:var(--font-body);
+  transition:all 0.2s;position:relative;
+  text-decoration:none;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px var(--accent-glow)}
+
+.submit-wrap{text-align:center;padding:32px 0 64px}
+.submit-btn{
+  padding:16px 48px;border-radius:100px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff;font-size:16px;font-weight:700;cursor:pointer;
+  font-family:var(--font-body);letter-spacing:0.3px;
+  transition:all 0.3s;
+  box-shadow:0 4px 24px var(--accent-glow);
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--accent-glow)}
+.submit-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-hint{font-size:13px;color:var(--text-dim);margin-top:12px}
+
+footer{
+  text-align:center;padding:32px 0;
+  border-top:1px solid var(--border);
+  font-size:13px;color:var(--text-dim);
+}
+footer a{color:var(--accent);text-decoration:none}
+.sc-bar{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:20px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.sc-bar a{color:var(--text-muted);text-decoration:none}
+.sc-bar .sc-logo{font-family:var(--font-display);font-size:20px;color:var(--text)}
+.sc-bar .sc-logo span{color:#1D9E75}
+
+@media(max-width:600px){
+  .audit-section{padding:24px 20px}
+  .options{flex-direction:column}
+  .opt-btn{text-align:center}
+  .breakdown-row{flex-direction:column;align-items:flex-start;gap:8px}
+  .breakdown-row .bar-wrap{width:100%}
+  .hero{padding:48px 0 32px}
+  .about-builder{flex-direction:column !important;align-items:center !important;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="sc-bar"><a class="sc-logo" href="/">Suite<span>Close</span></a><a href="/">← Back to suiteclose.co.uk</a></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<!-- PROGRESS -->
+<div class="progress-track" data-hidden="true" id="progressTrack">
+  <div class="progress-inner">
+    <div class="progress-label">
+      <span id="progressText">0 of 10 answered</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="badge">Free Assessment</div>
+    <h1>Is Your NetSuite Data Ready for AI?</h1>
+    <p>Score your financial data infrastructure across 5 critical dimensions. Takes 3 minutes — get an instant, actionable report.</p>
+  </header>
+
+  <!-- AUDIT FORM -->
+  <div id="auditForm"></div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap" id="submitWrap">
+    <div style="max-width:420px;margin:0 auto 20px;">
+      <label style="display:block;font-size:13px;color:var(--text-muted);margin-bottom:8px;text-align:left;">Want a PDF of your report? (optional)</label>
+      <input type="email" id="emailCapture" placeholder="your@email.com"
+        style="width:100%;padding:12px 16px;border-radius:100px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-family:var(--font-body);font-size:14px;outline:none;"
+      />
+      <div style="font-size:12px;color:var(--text-dim);margin-top:6px;text-align:left;">I'll send a personalised note with your results. No spam. Your email and answers are handled as described in our <a href="/privacy.html" style="color:var(--accent)">privacy notice</a>.</div>
+    </div>
+    <button class="submit-btn" id="submitBtn" disabled onclick="showResults()">Generate My Audit Report</button>
+    <div class="submit-hint" id="submitHint">Answer all 10 questions to unlock your report</div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-container" id="results"></div>
+
+  <footer>
+    A free tool from <a href="/">SuiteClose</a> — NetSuite data engineering, based in the UK.
+    <br><a href="/privacy.html">Privacy</a> · <a href="https://www.linkedin.com/in/abhisekh-kumar/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </footer>
+</div>
+
+<script>
+const SECTIONS = [
+  {
+    id:'extraction', icon:'⛏', title:'Data Extraction & Pipeline',
+    desc:'How data moves from NetSuite to your analytics environment.',
+    questions:[
+      {q:'How is data currently extracted from NetSuite?',help:'Think about your primary method for getting data out.',options:[
+        {label:'Manual CSV exports',score:0},{label:'Saved Searches / SuiteAnalytics',score:1},{label:'SuiteTalk / REST API (custom)',score:2},{label:'iPaaS (Fivetran, Celigo, etc.)',score:3}
+      ]},
+      {q:'How frequently does your data refresh?',options:[
+        {label:'Monthly or ad-hoc',score:0},{label:'Weekly',score:1},{label:'Daily',score:2},{label:'Near real-time (<1 hr)',score:3}
+      ]}
+    ]
+  },
+  {
+    id:'quality', icon:'🔬', title:'Data Quality & Consistency',
+    desc:'The trustworthiness and cleanliness of your financial data.',
+    questions:[
+      {q:'How consistent is your Chart of Accounts across subsidiaries?',help:'If you have multiple entities or subsidiaries in NetSuite.',options:[
+        {label:'Every entity has its own CoA',score:0},{label:'Similar but with manual mapping',score:1},{label:'Standardised with some exceptions',score:2},{label:'Fully unified and enforced',score:3}
+      ]},
+      {q:'Do you have documented business rules for revenue recognition, allocations, or intercompany?',options:[
+        {label:'No — it\'s tribal knowledge',score:0},{label:'Partially documented',score:1},{label:'Documented but not enforced in code',score:2},{label:'Codified in transformation layer (dbt, stored procs)',score:3}
+      ]}
+    ]
+  },
+  {
+    id:'modeling', icon:'🏗', title:'Data Modelling & Structure',
+    desc:'How well your data is organised for analytical consumption.',
+    questions:[
+      {q:'Do you have a defined dimensional model (star/snowflake schema) for financial data?',options:[
+        {label:'No — queries hit raw tables or exports',score:0},{label:'Some views / saved searches',score:1},{label:'Partial dimensional model',score:2},{label:'Full star schema with fact & dimension tables',score:3}
+      ]},
+      {q:'Are key financial metrics (gross margin, burn rate, revenue by segment) defined in a single place?',options:[
+        {label:'Defined differently per report/person',score:0},{label:'Defined in a wiki but not enforced',score:1},{label:'Defined in BI tool measures',score:2},{label:'Defined in a semantic/metrics layer (dbt metrics, Cube, etc.)',score:3}
+      ]}
+    ]
+  },
+  {
+    id:'governance', icon:'🛡', title:'Governance & Access Control',
+    desc:'Security, lineage, and trust in your data assets.',
+    questions:[
+      {q:'Is there role-based access control on your analytics data?',options:[
+        {label:'No — everyone sees everything or nothing',score:0},{label:'Basic folder/report-level access',score:1},{label:'Role-based with some row-level security',score:2},{label:'Fine-grained RBAC with row/column-level policies',score:3}
+      ]},
+      {q:'Can you trace a number in a report back to its source transaction in NetSuite?',options:[
+        {label:'Not reliably',score:0},{label:'With significant manual effort',score:1},{label:'Through documentation and naming conventions',score:2},{label:'Automated lineage (dbt docs, data catalog)',score:3}
+      ]}
+    ]
+  },
+  {
+    id:'ai', icon:'🤖', title:'AI & Semantic Readiness',
+    desc:'How prepared your data is for LLM-powered interfaces and AI agents.',
+    questions:[
+      {q:'Do your tables and columns have clear, human-readable descriptions?',help:'AI models need context to generate correct queries.',options:[
+        {label:'Mostly cryptic or inherited names',score:0},{label:'Some tables are documented',score:1},{label:'Most tables documented, columns partially',score:2},{label:'Full data dictionary with descriptions, examples, and valid values',score:3}
+      ]},
+      {q:'Could an AI agent query your data without knowing NetSuite-specific codes or IDs?',options:[
+        {label:'No — you need deep NetSuite knowledge',score:0},{label:'With significant prompt engineering',score:1},{label:'For some common queries',score:2},{label:'Yes — semantic layer abstracts complexity',score:3}
+      ]}
+    ]
+  }
+];
+
+const totalQ = SECTIONS.reduce((s,sec)=>s+sec.questions.length,0);
+const answers = {};
+
+function render(){
+  const form = document.getElementById('auditForm');
+  let html = '';
+  let qIndex = 0;
+  SECTIONS.forEach((sec,si)=>{
+    html += `<div class="audit-section" id="sec-${sec.id}">
+      <div class="section-header">
+        <div class="section-icon">${sec.icon}</div>
+        <div>
+          <div class="section-title">${sec.title}</div>
+          <div class="section-desc">${sec.desc}</div>
+          <div class="section-count">${sec.questions.length} questions</div>
+        </div>
+      </div>`;
+    sec.questions.forEach((q,qi)=>{
+      const key = `${si}-${qi}`;
+      html += `<div class="question" id="q-${key}">
+        <div class="q-text">${q.q}</div>
+        ${q.help?`<div class="q-help">${q.help}</div>`:''}
+        <div class="options">`;
+      q.options.forEach((opt,oi)=>{
+        html += `<button class="opt-btn" data-key="${key}" data-score="${opt.score}" data-oi="${oi}" onclick="selectOpt(this,'${key}',${opt.score},${oi})">${opt.label}</button>`;
+      });
+      html += `</div></div>`;
+      qIndex++;
+    });
+    html += `</div>`;
+  });
+  form.innerHTML = html;
+}
+
+function selectOpt(btn, key, score, oi){
+  btn.parentElement.querySelectorAll('.opt-btn').forEach(b=>{
+    b.classList.remove('selected','selected-partial','selected-no');
+  });
+  if(score>=2) btn.classList.add('selected');
+  else if(score===1) btn.classList.add('selected-partial');
+  else btn.classList.add('selected-no');
+
+  answers[key] = {score, oi};
+  updateProgress();
+}
+
+function updateProgress(){
+  const answered = Object.keys(answers).length;
+  const pct = Math.round((answered/totalQ)*100);
+  document.getElementById('progressFill').style.width = pct+'%';
+  document.getElementById('progressText').textContent = `${answered} of ${totalQ} answered`;
+  document.getElementById('progressPct').textContent = pct+'%';
+  document.getElementById('progressTrack').dataset.hidden = answered===0?'true':'false';
+
+  const btn = document.getElementById('submitBtn');
+  const hint = document.getElementById('submitHint');
+  if(answered===totalQ){
+    btn.disabled = false;
+    hint.textContent = 'All questions answered — ready to generate your report!';
+  } else {
+    btn.disabled = true;
+    hint.textContent = `${totalQ - answered} question${totalQ-answered>1?'s':''} remaining`;
+  }
+
+  SECTIONS.forEach((sec,si)=>{
+    const secEl = document.getElementById(`sec-${sec.id}`);
+    const allDone = sec.questions.every((_,qi)=>answers[`${si}-${qi}`]!==undefined);
+    secEl.classList.toggle('completed', allDone);
+  });
+}
+
+function computeScores(){
+  const sectionScores = SECTIONS.map((sec,si)=>{
+    const maxPossible = sec.questions.length * 3;
+    let earned = 0;
+    sec.questions.forEach((_,qi)=>{
+      const a = answers[`${si}-${qi}`];
+      if(a) earned += a.score;
+    });
+    return {id:sec.id, title:sec.title, icon:sec.icon, earned, max:maxPossible, pct:Math.round((earned/maxPossible)*100)};
+  });
+  const totalEarned = sectionScores.reduce((s,r)=>s+r.earned,0);
+  const totalMax = sectionScores.reduce((s,r)=>s+r.max,0);
+  const overall = Math.round((totalEarned/totalMax)*100);
+  return {overall, sectionScores, totalEarned, totalMax};
+}
+
+function getGrade(pct){
+  if(pct>=80) return {label:'AI-Ready',color:'var(--green)',desc:'Your setup will produce trustworthy answers from the NetSuite MCP connector today. The data foundation is solid enough to support AI-powered financial analysis without significant reliability risk.'};
+  if(pct>=60) return {label:'Almost There',color:'var(--accent)',desc:'The AI Connector will handle simple queries but will produce unreliable results on department-level or multi-period questions. Two or three targeted fixes will get you to production-ready.'};
+  if(pct>=35) return {label:'Significant Gaps',color:'var(--yellow)',desc:'Connecting AI to this data now will produce confident but wrong financial answers — the most dangerous failure mode. A structured remediation across your lowest-scoring dimensions is needed first.'};
+  return {label:'Foundation Needed',color:'var(--red)',desc:'Plugging AI into this setup is like asking someone to audit accounts that have never been reconciled. The good news: a clear, structured approach can get you to AI-ready in 6–8 weeks.'};
+}
+
+function getFindings(sectionScores){
+  const findings = [];
+  sectionScores.forEach(s=>{
+    if(s.pct < 50){
+      findings.push({severity:'critical',text:`${s.icon} ${s.title} scored ${s.pct}% — this is a major blocker for reliable AI output. ${
+        s.id==='extraction'?'Without a reliable, automated pipeline, AI answers will be based on stale or incomplete data.':
+        s.id==='quality'?'Inconsistent financial data means AI will confidently give you wrong numbers — the most dangerous failure mode.':
+        s.id==='modeling'?'Without a proper dimensional model, AI tools can\'t navigate relationships between accounts, periods, and entities.':
+        s.id==='governance'?'No lineage or version control means you can\'t audit AI-generated answers or roll back errors.':
+        'Without semantic metadata, AI models are essentially guessing what your columns mean.'
+      }`});
+    } else if(s.pct < 75){
+      findings.push({severity:'warning',text:`${s.icon} ${s.title} scored ${s.pct}% — workable but fragile. ${
+        s.id==='extraction'?'Consider upgrading to an iPaaS connector and increasing refresh frequency.':
+        s.id==='quality'?'Codify your business rules into a transformation layer like dbt to eliminate manual interpretation.':
+        s.id==='modeling'?'Build out a proper star schema and centralise metric definitions.':
+        s.id==='governance'?'Add version control and basic data tests to catch issues before they reach reports.':
+        'Document your tables and add a semantic layer to reduce AI prompt engineering overhead.'
+      }`});
+    } else {
+      findings.push({severity:'good',text:`${s.icon} ${s.title} scored ${s.pct}% — strong foundation in place.`});
+    }
+  });
+  return findings.sort((a,b)=>{const order={critical:0,warning:1,info:2,good:3};return order[a.severity]-order[b.severity]});
+}
+
+function showResults(){
+  const email = document.getElementById('emailCapture')?.value?.trim();
+  const {overall, sectionScores} = computeScores();
+  const grade = getGrade(overall);
+  if (email) {
+    fetch('https://formspree.io/f/xzdkerjq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        score: overall,
+        grade: grade.label,
+        source: 'NetSuite AI Readiness Audit (suiteclose.co.uk/audit)',
+        breakdown: sectionScores.map(s => ({
+          dimension: s.title,
+          score: s.pct + '%'
+        })),
+        answers: SECTIONS.map((sec, si) => ({
+          section: sec.title,
+          responses: sec.questions.map((q, qi) => ({
+            question: q.q,
+            answer: q.options[answers[`${si}-${qi}`]?.oi]?.label || 'Not answered'
+          }))
+        }))
+      })
+    });
+  }
+  const findings = getFindings(sectionScores);
+  const circumference = 2 * Math.PI * 78;
+
+  document.getElementById('submitWrap').style.display = 'none';
+
+  let html = `
+  <div class="score-card">
+    <div class="score-ring">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle class="track" cx="90" cy="90" r="78"/>
+        <circle class="fill" cx="90" cy="90" r="78"
+          stroke="${grade.color}"
+          stroke-dasharray="${circumference}"
+          stroke-dashoffset="${circumference}"
+          id="scoreArc"/>
+      </svg>
+      <div class="score-number">${overall}<span>/100</span></div>
+    </div>
+    <div class="score-label" style="color:${grade.color}">${grade.label}</div>
+    <div class="score-subtitle">${grade.desc}</div>
+  </div>
+
+  <div class="breakdown">
+    <h3>Score Breakdown</h3>
+    ${sectionScores.map(s=>{
+      const c = s.pct>=75?'var(--green)':s.pct>=50?'var(--yellow)':'var(--red)';
+      return `<div class="breakdown-row">
+        <span class="label">${s.icon} ${s.title}</span>
+        <div class="bar-wrap">
+          <div class="bar-bg"><div class="bar-fg" style="width:0%;background:${c}" data-target="${s.pct}"></div></div>
+          <span class="pct" style="color:${c}">${s.pct}%</span>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="findings">
+    <h3>Key Findings & Recommendations</h3>
+    ${findings.map(f=>`<div class="finding-item">
+      <div class="severity ${f.severity}">${f.severity}</div>
+      <p>${f.text}</p>
+    </div>`).join('')}
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:24px;">
+    <h3 style="font-family:var(--font-display);font-size:20px;margin-bottom:20px;">What to do with your results</h3>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--accent);flex-shrink:0;">1</div>
+        <div><div style="font-weight:500;margin-bottom:2px;">Share your score with your finance team</div><div style="font-size:14px;color:var(--text-muted);">They'll immediately recognise which gaps match their day-to-day pain. Alignment on the problem is the first step.</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--accent);flex-shrink:0;">2</div>
+        <div><div style="font-weight:500;margin-bottom:2px;">Focus on your lowest-scoring dimension first</div><div style="font-size:14px;color:var(--text-muted);">That single dimension is most likely blocking everything else downstream. Fix it before adding AI tools.</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--accent);flex-shrink:0;">3</div>
+        <div><div style="font-weight:500;margin-bottom:2px;">Book a 20-minute call</div><div style="font-size:14px;color:var(--text-muted);">I'll walk through a remediation plan specific to your setup — no pitch, just a structured look at what to fix and in what order.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-builder" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;margin-bottom:24px;display:flex;gap:20px;align-items:flex-start;">
+    <div style="width:52px;height:52px;border-radius:50%;background:var(--accent-glow);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:20px;flex-shrink:0;">A</div>
+    <div>
+      <div style="font-weight:600;margin-bottom:6px;">Created by Abhisekh Kumar</div>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin:0;">Data engineer specialising in NetSuite financial data infrastructure — previously at RSM, working across Databricks, Snowflake, dbt, and Power BI. I built this tool because I kept seeing finance teams connect AI to NetSuite data that hadn't been properly structured — and getting confident wrong answers as a result. The audit surfaces the gaps before they become problems.</p>
+    </div>
+  </div>
+
+  <div class="cta-box">
+    <h3>Want a Detailed Remediation Plan?</h3>
+    <p>I build the clean financial data layer underneath NetSuite AI connectors — so every answer is trustworthy. Let's talk about your specific gaps.</p>
+    <a class="cta-btn" href="/#contact-section">
+      Request a 20-minute call →
+    </a>
+    <p style="margin:16px 0 0;font-size:13px"><a href="https://www.linkedin.com/in/abhisekh-kumar/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Or connect on LinkedIn</a></p>
+  </div>`;
+
+  const container = document.getElementById('results');
+  container.innerHTML = html;
+  container.classList.add('visible');
+
+  container.scrollIntoView({behavior:'smooth',block:'start'});
+
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{
+      const offset = circumference - (overall/100)*circumference;
+      document.getElementById('scoreArc').style.strokeDashoffset = offset;
+    },100);
+  });
+
+  document.querySelectorAll('.bar-fg').forEach(bar=>{
+    setTimeout(()=>{bar.style.width = bar.dataset.target+'%'},300);
+  });
+}
+
+render();
+</script>
+</body>
+</html>

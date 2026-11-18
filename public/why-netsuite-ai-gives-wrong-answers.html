@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Why NetSuite AI gives wrong answers | SuiteClose</title>
+<meta name="description" content="NetSuite AI tools give inconsistent or incorrect answers when the data layer underneath is broken. Here's why it happens and how UK finance teams are fixing it.">
+<link rel="canonical" href="https://suiteclose.co.uk/why-netsuite-ai-gives-wrong-answers.html">
+<link rel="stylesheet" href="article.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/chat.css">
+<script src="/assets/chat.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="/">suite<span>close</span></a></div>
+  <a class="back-link" href="/">← Back to home</a>
+</nav>
+
+<article>
+  <div class="eyebrow">NetSuite data engineering</div>
+  <h1>Why NetSuite AI gives wrong answers</h1>
+  <p class="lede">If NetSuite AI keeps returning answers that don't match your actual numbers, the AI isn't the problem. The data underneath it is.</p>
+
+  <h2>The AI isn't broken — the data is</h2>
+  <p>An AI assistant answers questions by querying whatever data it is pointed at. If that data has three slightly different definitions of revenue, the assistant will pick one, and it may not be the one your board pack uses. The model is doing exactly what it was asked; the question was simply ambiguous at the data level.</p>
+  <p>That is why the same question can return different answers on different days, or from different tools. Nothing about the model changed. The underlying tables, filters and mappings did.</p>
+
+  <h2>Where the inconsistencies come from</h2>
+  <p>In NetSuite environments the usual culprits are:</p>
+  <ul>
+  <li><strong>Posting vs non-posting records.</strong> Sales orders, estimates and unapproved journals sit alongside posted transactions. A query that doesn't filter on posting status will happily count them.</li>
+  <li><strong>Transaction date vs accounting period.</strong> Your P&amp;L is built by accounting period. Raw exports are often filtered by transaction date, which moves anything posted into a different period.</li>
+  <li><strong>Header vs line amounts.</strong> Summing both the main line and the item lines of a transaction double-counts it.</li>
+  <li><strong>Currency and subsidiary context.</strong> Foreign-currency amounts, base-currency amounts and consolidated amounts are different numbers. So are figures with and without intercompany eliminations.</li>
+  <li><strong>Undocumented account mappings.</strong> If "marketing spend" lives in someone's head rather than in code, every tool reinvents it.</li>
+  </ul>
+
+  <h2>What a clean NetSuite data layer looks like</h2>
+  <p>A clean data layer sits between NetSuite and everything that reads from it — reports, spreadsheets and AI tools. It extracts the raw records on a schedule, applies the accounting rules once (posting status, periods, currency, eliminations, account mappings), and publishes a small set of tested, documented tables: a general ledger fact table, a trial balance, and the agreed metrics on top.</p>
+  <p>Crucially, it reconciles itself. Every refresh checks that the modelled trial balance ties to NetSuite's own trial balance by period and subsidiary. If it doesn't, the pipeline flags it before anyone — human or AI — reads a wrong number.</p>
+
+  <h2>How SuiteClose fixes it</h2>
+  <p>We start by tracing a handful of numbers your team already disputes back to source, which shows exactly which of the issues above apply to you. We then build the layer in your stack — typically NetSuite → Fivetran → dbt → Databricks or Microsoft Fabric — with each metric defined once and covered by tests. Your AI tools are then pointed at those governed tables instead of raw exports, so they read the same numbers as your finance team.</p>
+
+  <div class="cta-box">
+    <h3>Is your NetSuite data layer feeding AI wrong answers?</h3>
+    <p>The free AI Readiness Audit — 10 questions, about 3 minutes, clear picture of where things are breaking.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
+  </div>
+</article>
+
+<footer>
+  <div class="footer-logo">suite<span>close</span>.co.uk</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a></div>
+</footer>
+
+</body>
+</html>
