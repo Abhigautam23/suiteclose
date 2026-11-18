@@ -13,6 +13,10 @@ CFOs, Finance Directors, and Financial Controllers at UK SMEs (50-200 employees)
 
 ## Key pages
 - https://suiteclose.co.uk
+- https://suiteclose.co.uk/audit/ (free NetSuite AI Readiness Audit, 10 questions)
+- https://suiteclose.co.uk/why-netsuite-ai-gives-wrong-answers.html
+- https://suiteclose.co.uk/why-trial-balance-does-not-match-gl-netsuite.html
+- https://suiteclose.co.uk/why-revenue-different-between-reports.html
 
 ## Contact
 - https://suiteclose.co.uk/#contact-section

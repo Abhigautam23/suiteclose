@@ -8,6 +8,7 @@
 <meta name="description" content="Revenue totals that differ between NetSuite reports usually come from filter drift, subsidiary gaps, or recognition rule inconsistencies. Here's how to fix it.">
 <link rel="canonical" href="https://suiteclose.co.uk/why-revenue-different-between-reports.html">
 <link rel="stylesheet" href="article.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -22,27 +23,35 @@
   <p class="lede">Pulling revenue from three different NetSuite reports and getting three different numbers is more common than it should be — and almost always fixable at the data layer.</p>
 
   <h2>Where reports drift apart</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>Three reports, three revenue figures. Typical reasons in NetSuite:</p>
+  <ul>
+  <li>One report uses saved-search criteria on transaction type (invoices and cash sales) while the income statement uses posted GL lines on income accounts.</li>
+  <li>One includes credit memos, discounts or shipping lines; another doesn't.</li>
+  <li>One filters by transaction date, another by accounting period.</li>
+  <li>One shows foreign-currency amounts, another base or consolidated currency.</li>
+  <li>A sales or bookings report counts sales orders, which are non-posting and are not revenue.</li>
+  </ul>
+  <p>None of these reports is "wrong" — they answer different questions under the same label.</p>
 
   <h2>Revenue recognition rules vs raw GL</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>If you use revenue recognition or Advanced Revenue Management, invoiced amounts often post to deferred revenue first and are released to income by recognition journals over time. A report built on invoices shows billings; the income statement shows recognised revenue. Both are useful, but they should never share a name.</p>
 
   <h2>Subsidiary and consolidation gaps</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>In NetSuite OneWorld, the subsidiary you run a report from changes the answer: which entities are included, which currency figures are shown in, and whether intercompany sales are eliminated. Revenue at a child subsidiary plus revenue at the parent will not equal consolidated revenue if there is intercompany trading.</p>
 
   <h2>Building a canonical revenue model</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>Agree the definitions first — billings, recognised revenue, net revenue — and write them down. Then build one model per definition from posted GL lines, with explicit rules for credit memos, currency and eliminations, and reconcile recognised revenue to the income statement each period. Every report, spreadsheet and AI tool then reads from those models, so "revenue" means the same thing everywhere.</p>
 
   <div class="cta-box">
     <h3>Three reports, three different revenue numbers?</h3>
-    <p>The free Close Audit pinpoints where the drift starts — in 10 minutes.</p>
-    <a class="cta-btn" href="https://abhigautam23.github.io/netsuite_audit/" target="_blank" rel="noopener">Get your free Close Audit ↗</a>
+    <p>The free AI Readiness Audit pinpoints where the drift starts — in about 3 minutes.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
   </div>
 </article>
 
 <footer>
   <div class="footer-logo">suite<span>close</span>.co.uk</div>
-  <div>Built on real NetSuite data · Based in the UK</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a></div>
 </footer>
 
 </body>

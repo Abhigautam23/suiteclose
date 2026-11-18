@@ -8,6 +8,7 @@
 <meta name="description" content="Your NetSuite P&L report shows one number, AI shows another. Usually it's a data layer issue, not an AI one. Here's how UK finance teams diagnose and fix it.">
 <link rel="canonical" href="https://suiteclose.co.uk/why-netsuite-pl-not-match-ai-output.html">
 <link rel="stylesheet" href="article.css">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 
@@ -22,27 +23,30 @@
   <p class="lede">When the P&amp;L you pull from NetSuite doesn't agree with the number your AI assistant returns, there's almost always a data mapping or timing issue behind it — not a model error.</p>
 
   <h2>Different sources, different answers</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>The NetSuite income statement is a report with built-in logic: posting transactions only, grouped by accounting period, in the subsidiary and currency context you selected. An AI tool usually sees none of that logic. It sees an export, an API extract or a warehouse table, and it builds its own answer from the rows it finds.</p>
+  <p>If the two disagree, the first question is not "which is right?" but "what is each one actually summing?". In almost every case they are summing different things.</p>
 
   <h2>Chart of accounts mapping gaps</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>P&amp;L lines such as "Gross margin" or "Operating expenses" are groupings of GL accounts. NetSuite applies your financial report layout; an AI tool has to infer it. New accounts added since the mapping was last updated, accounts reclassified mid-year, or inactive accounts that still hold historical balances all cause the two to drift.</p>
+  <p>The fix is a maintained mapping table, owned by finance and enforced in code, that every tool uses — including the AI.</p>
 
   <h2>Timing, cut-offs, and period locks</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>NetSuite assigns each posting to an accounting period, which can differ from the transaction date. Journals posted after an extract was taken, adjustments made after a period was reopened, and revaluation or amortisation entries generated at month-end will all appear in NetSuite but not in a stale copy of the data.</p>
+  <p>Knowing when your data was last refreshed, and whether the period it covers is closed, is as important as the number itself.</p>
 
   <h2>Building a single source of truth</h2>
-  <p class="coming-soon">Content coming soon.</p>
+  <p>The durable fix is to stop letting each tool build its own P&amp;L. Model the general ledger once, apply your report layout as a mapping, reconcile the result to NetSuite's own trial balance every refresh, and point reports and AI tools at that model. When a number moves, there is one place to look and a test that tells you why.</p>
 
   <div class="cta-box">
     <h3>Want to know where your P&amp;L is leaking accuracy?</h3>
-    <p>The free Close Audit takes 10 minutes and maps exactly where your data layer is breaking.</p>
-    <a class="cta-btn" href="https://abhigautam23.github.io/netsuite_audit/" target="_blank" rel="noopener">Get your free Close Audit ↗</a>
+    <p>The free AI Readiness Audit takes about 3 minutes and shows where your data layer is breaking.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
   </div>
 </article>
 
 <footer>
   <div class="footer-logo">suite<span>close</span>.co.uk</div>
-  <div>Built on real NetSuite data · Based in the UK</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a></div>
 </footer>
 
 </body>

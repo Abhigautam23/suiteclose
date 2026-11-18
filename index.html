@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SuiteClose — NetSuite data engineering</title>
+<meta name="description" content="SuiteClose fixes the NetSuite finance data layer for UK finance teams — clean, tested, automated reporting so your P&amp;L, TB and AI tools all agree.">
+<link rel="canonical" href="https://suiteclose.co.uk/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://suiteclose.co.uk/">
+<meta property="og:title" content="SuiteClose — NetSuite data engineering">
+<meta property="og:description" content="Your NetSuite AI is only as good as your data. We fix the finance layer underneath it.">
+<meta property="og:image" content="https://suiteclose.co.uk/audit/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap');
   *{box-sizing:border-box;margin:0;padding:0}
@@ -94,6 +103,8 @@
   .contact-form button{align-self:flex-start;margin-top:0.25rem}
   .form-success{background:rgba(29,158,117,0.08);border:0.5px solid var(--accent);color:var(--accent);padding:1rem;border-radius:8px;font-size:0.9rem;display:none}
   .form-success.show{display:block}
+  .form-note{font-size:0.75rem;color:var(--ink3)}
+  .form-note a,.credibility a,footer a{color:var(--accent)}
 
   /* Pain section */
   .pain-list{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.75rem}
@@ -174,15 +185,15 @@
 <nav>
   <div class="logo">
     <svg width="32" height="32" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4"  y="4"  width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="30" y="4"  width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="56" y="4"  width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="4"  y="30" width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="30" y="30" width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="56" y="30" width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="4"  y="56" width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="30" y="56" width="20" height="20" rx="5" fill="none" stroke="#ffffff" stroke-width="3"/>
-      <rect x="56" y="56" width="20" height="20" rx="5" fill="#2563EB"/>
+      <rect x="4"  y="4"  width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="30" y="4"  width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="56" y="4"  width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="4"  y="30" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="30" y="30" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="56" y="30" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="4"  y="56" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="30" y="56" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <rect x="56" y="56" width="20" height="20" rx="5" fill="#1D9E75"/>
       <polyline points="61,67 65,72 75,62" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <span class="logo-wordmark">Suite<span>Close</span></span>
@@ -191,7 +202,7 @@
     <a href="#services-section">Services</a>
     <a href="#demo-section">Demo</a>
     <a href="#contact-section">Contact</a>
-    <a class="cta-btn nav-cta" href="https://abhigautam23.github.io/netsuite_audit/" target="_blank" rel="noopener">Free audit</a>
+    <a class="cta-btn nav-cta" href="/audit/">Free audit</a>
   </div>
 </nav>
 
@@ -200,8 +211,8 @@
   <h1>Your NetSuite AI is only as good as your data.<br><em>We fix the finance layer underneath it.</em></h1>
   <p>Most NetSuite reports are wrong before AI even touches them. Broken account mappings, manual exports, inconsistent reconciliations. We fix the data layer so your numbers are right everywhere, automatically.</p>
   <div class="hero-actions">
-    <a class="cta-btn" href="https://abhigautam23.github.io/netsuite_audit/" target="_blank" rel="noopener">Get your free Close Audit ↗</a>
-    <a href="#demo-section">See it in action ↗</a>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
+    <a href="#demo-section">See the demo ↓</a>
   </div>
 </div>
 
@@ -226,7 +237,7 @@
     <div class="problem-item">
       <div class="icon">⏱</div>
       <strong>Slow close cycle</strong>
-      <p>5–10 day month-end close when it should be 1–2. Data isn't the bottleneck — the pipeline is.</p>
+      <p>A 7–10 day month-end close when 2–3 is achievable. The data isn't the bottleneck — the pipeline is.</p>
     </div>
   </div>
 </div>
@@ -251,7 +262,7 @@
     </div>
     <div class="compare-row">
       <div class="compare-cell before">7–10 day close cycle</div>
-      <div class="compare-cell after">2–3 day close cycle</div>
+      <div class="compare-cell after">Target: 2–3 day close cycle</div>
     </div>
     <div class="compare-row">
       <div class="compare-cell before">Manual reconciliation</div>
@@ -263,7 +274,7 @@
     </div>
     <div class="compare-row">
       <div class="compare-cell before">AI gives inconsistent answers</div>
-      <div class="compare-cell after">AI gives consistent answers</div>
+      <div class="compare-cell after">AI reads the same tested numbers as finance</div>
     </div>
     <div class="compare-row">
       <div class="compare-cell before">Numbers change by report</div>
@@ -273,16 +284,16 @@
 </div>
 
 <div class="section" id="demo-section">
-  <div class="section-label">Live demo — real NetSuite data</div>
+  <div class="section-label">Interactive demo — anonymised NetSuite data</div>
   <div class="demo-wrapper">
     <div class="demo-header">
       <strong>Financial intelligence dashboard</strong>
       <span>Apr 2022 – Mar 2025 · GBP · suiteclose demo</span>
     </div>
     <div class="demo-tabs">
-      <button class="demo-tab active" onclick="switchTab('pl')">P&L overview</button>
-      <button class="demo-tab" onclick="switchTab('suppliers')">Supplier exposure</button>
-      <button class="demo-tab" onclick="switchTab('vat')">VAT position</button>
+      <button class="demo-tab active" onclick="switchTab('pl',this)">P&L overview</button>
+      <button class="demo-tab" onclick="switchTab('suppliers',this)">Supplier exposure</button>
+      <button class="demo-tab" onclick="switchTab('vat',this)">VAT position</button>
     </div>
     <div class="demo-body">
 
@@ -334,9 +345,9 @@
             <div class="kpi-sub neg">High concentration risk</div>
           </div>
           <div class="kpi">
-            <div class="kpi-label">Active suppliers</div>
+            <div class="kpi-label">Counterparties</div>
             <div class="kpi-val">150</div>
-            <div class="kpi-sub">incl. customers</div>
+            <div class="kpi-sub">vendors + customers</div>
           </div>
           <div class="kpi">
             <div class="kpi-label">Vendor bills</div>
@@ -381,7 +392,7 @@
 
     </div>
   </div>
-  <p style="font-size:0.75rem;color:var(--ink3);text-align:center">This dashboard is built from a real anonymised NetSuite export — the same data structure your finance team works with every day.</p>
+  <p style="font-size:0.75rem;color:var(--ink3);text-align:center">Illustrative dashboard built from an anonymised NetSuite dataset (Apr 2022 – Mar 2025). Names and figures are de-identified; the data structure is the same one your finance team works with every day.</p>
 </div>
 
 <div class="section" id="services-section">
@@ -389,12 +400,12 @@
   <div class="services">
     <div class="service-card">
       <div class="tier">Tier 1 · Audit</div>
-      <h3>NetSuite data audit</h3>
-      <p>We map your chart of accounts, identify gaps in your reporting layer, and deliver a clear picture of where your data pipeline is breaking.</p>
+      <h3>In-depth NetSuite data audit</h3>
+      <p>A hands-on review of your NetSuite account: we map your chart of accounts, trace where reports disagree, and deliver a written fix plan for your data pipeline.</p>
       <div class="price">£995 <span>one-time</span></div>
     </div>
     <div class="service-card" style="border-color:var(--accent)">
-      <div class="tier" style="color:var(--accent)">Tier 2 · Build · Most popular</div>
+      <div class="tier" style="color:var(--accent)">Tier 2 · Build · Recommended</div>
       <h3>Automated reporting layer</h3>
       <p>We replace your Excel reporting with a live, model-driven P&L, balance sheet, and TB — refreshed automatically from your NetSuite data.</p>
       <div class="price">£4,500 <span>project</span></div>
@@ -407,8 +418,8 @@
     </div>
   </div>
   <div style="text-align:center;margin-top:1rem">
-    <a class="cta-btn" href="https://abhigautam23.github.io/netsuite_audit/" target="_blank" rel="noopener">Get your free Close Audit ↗</a>
-    <p style="font-size:0.8rem;color:var(--ink3);margin-top:0.85rem">5 questions. 10 minutes. Clear picture of where your data layer is breaking.</p>
+    <a class="cta-btn" href="/audit/">Take the free AI Readiness Audit</a>
+    <p style="font-size:0.8rem;color:var(--ink3);margin-top:0.85rem">10 questions. About 3 minutes. An instant score across 5 dimensions of your NetSuite data layer.<br>Not sure where to start? The free self-assessment comes first; the paid audit is a hands-on review of your actual account.</p>
   </div>
 </div>
 
@@ -436,6 +447,7 @@
     </label>
     <input type="hidden" name="_subject" value="New SuiteClose enquiry">
     <button type="submit" class="cta-btn">Send message</button>
+    <p class="form-note">We use your details only to reply to your enquiry. See our <a href="/privacy.html">privacy notice</a>.</p>
   </form>
 </div>
 
@@ -444,12 +456,13 @@
   <div class="credibility">
     <p>Not a consultancy. Not an agency. One specialist who has worked inside NetSuite financial data pipelines at scale — building the exact infrastructure we sell.</p>
     <div class="stack-line">NetSuite → Fivetran → dbt → Databricks / Microsoft Fabric → your reports</div>
+    <p style="margin:1.5rem auto 0;font-size:0.9rem">SuiteClose is run by <strong style="font-weight:500;color:var(--ink)">Abhisekh Kumar</strong>, a data engineer specialising in NetSuite financial data (previously at RSM). You work directly with the person who builds it. <a href="https://www.linkedin.com/in/abhisekh-kumar/" target="_blank" rel="noopener">LinkedIn profile ↗</a></p>
   </div>
 </div>
 
 <footer>
-  <div class="footer-logo">suite<span>close</span>.com</div>
-  <div>Built on real NetSuite data · Based in the UK</div>
+  <div class="footer-logo">suite<span>close</span>.co.uk</div>
+  <div>Based in the UK · <a href="/privacy.html">Privacy</a> · <a href="https://www.linkedin.com/in/abhisekh-kumar/" target="_blank" rel="noopener">LinkedIn</a></div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -469,7 +482,7 @@ contactForm.addEventListener('submit',async e=>{
       btn.textContent='Sent';
     }else{
       btn.textContent=originalLabel;btn.disabled=false;
-      alert('Something went wrong. Please email us directly.');
+      alert('Something went wrong sending your message. Please try again in a moment, or reach out on LinkedIn.');
     }
   }catch(err){
     btn.textContent=originalLabel;btn.disabled=false;
@@ -477,11 +490,11 @@ contactForm.addEventListener('submit',async e=>{
   }
 });
 
-function switchTab(name){
+function switchTab(name,btn){
   document.querySelectorAll('.demo-tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  event.target.classList.add('active');
+  btn.classList.add('active');
 }
 
 const months=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
